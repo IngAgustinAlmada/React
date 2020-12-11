@@ -8,35 +8,41 @@ import About from './components/Pages/About';
 
 import './App.css';
 
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 
 class App extends Component {
   state = {
     todos:[
-      {
-        id: uuidv4(),
-        title:"Looking for job",
-        status:false
-      },
-      {
-        id: uuidv4(),
-        title:"Going on a trip",
-        status:false
-      },
-      {
-        id: uuidv4(),
-        title:"Working hard",
-        status:false
-      }
+      // {
+      //   id: uuidv4(),
+      //   title:"Looking for job",
+      //   status:false
+      // },
+      // {
+      //   id: uuidv4(),
+      //   title:"Going on a trip",
+      //   status:false
+      // },
+      // {
+      //   id: uuidv4(),
+      //   title:"Working hard",
+      //   status:false
+      // }
     ]
+  }
+
+  componentDidMount(){
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+    .then(res => this.setState({ todos:res.data }))
   }
 
   //Toggle Complete
   markComplete = (id) => {
     this.setState({ todos: this.state.todos.map(todo => {
       if(todo.id === id){
-        todo.status = !todo.status
+        todo.completed = !todo.completed
        }
       return todo;
     })
@@ -45,20 +51,19 @@ class App extends Component {
 
   //Delete Todo
   delTodo = (id) => {
-    this.setState({
-      todos: [...this.state.todos.filter(todo => todo.id !== id)]
-    })
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    .then (res => this.setState({ todos: [...this.state.todos.filter
+      (todo => todo.id !== id)] }));
   }
 
   //Add Todo
   addTodo = (title) => {
-    const newTodo = {
-      id: uuidv4(),
-      title: title,
-      status: false
-
-    }
-    this.setState({ todos: [...this.state.todos, newTodo] })
+    axios.post("https://jsonplaceholder.typicode.com/todos", {
+      title,
+      completed: false
+    })
+    .then(res => this.setState({todos:
+      [...this.state.todos, res.data] }));
   }
 
   render() {
