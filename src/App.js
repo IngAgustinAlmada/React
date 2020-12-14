@@ -1,69 +1,48 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-import Todos from "./components/Todos";
-import AddTodo from "./components/AddTodo";
-import Header from "./components/layout/Header";
-import About from './components/Pages/About';
-
+import Appointment from "./components/Appointment";
+import AddAppointment from "./components/AddAppointment";
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-
-//import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 
 
 class App extends Component {
   state = {
-    todos:[
-      // {
-      //   id: uuidv4(),
-      //   title:"Looking for job",
-      //   status:false
-      // },
-      // {
-      //   id: uuidv4(),
-      //   title:"Going on a trip",
-      //   status:false
-      // },
-      // {
-      //   id: uuidv4(),
-      //   title:"Working hard",
-      //   status:false
-      // }
-    ]
+    appointments:[]
   }
 
   componentDidMount(){
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
-    .then(res => this.setState({ todos:res.data }))
+    const dataAppointments = require('./data/appointment.json')
+    this.setState({ appointments: dataAppointments });
   }
 
   //Toggle Complete
   markComplete = (id) => {
-    this.setState({ todos: this.state.todos.map(todo => {
-      if(todo.id === id){
-        todo.completed = !todo.completed
+    this.setState({ appointments: this.state.appointments.map(appointment => {
+      if(appointment.id === id){
+        appointment.completed = !appointment.completed
        }
-      return todo;
+      return appointment;
     })
   })
   }
 
-  //Delete Todo
-  delTodo = (id) => {
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-    .then (res => this.setState({ todos: [...this.state.todos.filter
-      (todo => todo.id !== id)] }));
+  //Delete Appointment
+  delAppointment = (id) => {
+    this.setState({
+    appointments: [...this.state.appointments.filter(appointment => appointment.id !== id)] });
   }
 
-  //Add Todo
-  addTodo = (title) => {
-    axios.post("https://jsonplaceholder.typicode.com/todos", {
-      title,
-      completed: false
-    })
-    .then(res => this.setState({todos:
-      [...this.state.todos, res.data] }));
+  //Add Appointment
+  AddAppointment = (buildingId,boilerId,start_timestamp,end_timestamp) => {
+    const newAppointment = {
+      "id": uuidv4(),
+      buildingId,
+      boilerId,
+      start_timestamp,
+      end_timestamp
+    };
+    this.setState({appointments: [...this.state.appointments, newAppointment] });
   }
 
   render() {
@@ -71,14 +50,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="Container">
-            <Header />
             <Route exact path="/" render ={props => (
               <React.Fragment>
-                <AddTodo addTodo={this.addTodo} />
-                <Todos todos = {this.state.todos} markComplete = {this.markComplete} delTodo={this.delTodo}/>
+                <AddAppointment addAppointment={this.addAppointment} />
+                <Appointment appointments = {this.state.appointments} markComplete = {this.markComplete} delAppointment={this.delAppointment}/>
               </React.Fragment>
             )} />
-            <Route path="/about" component={About} />
           </div>
         </div>
       </Router>

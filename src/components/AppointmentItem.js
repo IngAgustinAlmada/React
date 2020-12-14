@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
-export class TodoItem extends Component {
+export class AppointmentItem extends Component {
     getStyle = () => {
         return {
             backgroundColor:"lightgrey",
             padding:"10px",
             borderBottom: "1px black dotted",
-            textDecoration: this.props.todo.completed ?
+            textDecoration: this.props.appointment.completed ?
                 "line-through" : "none"
             }
         }
 
     render() {
-        const { id, title } = this.props.todo;
+        const { id, buildingId, boilerId,start_timestamp, end_timestamp } = this.props.appointment;
         return (
             <div style={this.getStyle()}>
                 <p>
                 <input type="checkbox" onChange={this.props.markComplete.bind(this,id)} /> {" "}
-                {title}
-                <button onClick={this.props.delTodo.bind(this,id)} style={btnStyle}>x</button>
+                Id: {id} - Building: {buildingId} - Boiler: {boilerId} - Start Date: {start_timestamp} - End Date: {end_timestamp}
+                <button onClick={this.props.delAppointment.bind(this,id)} style={btnStyle}>x</button>
+                <button style={btnStyle}>Edit</button>
                 </p>
             </div>
         )
@@ -27,10 +28,10 @@ export class TodoItem extends Component {
 }
 
 //PropTypes
-TodoItem.propTypes = {
-    todo:PropTypes.object.isRequired,
+AppointmentItem.propTypes = {
+    appointment:PropTypes.object.isRequired,
     markComplete:PropTypes.func.isRequired,
-    delTodo:PropTypes.func.isRequired,
+    delAppointment:PropTypes.func.isRequired,
 }
 
 const btnStyle = {
@@ -42,4 +43,4 @@ const btnStyle = {
     cursor: "pointer",
     float: "right",
 };
-export default TodoItem
+export default AppointmentItem

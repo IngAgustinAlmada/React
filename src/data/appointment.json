@@ -1,0 +1,12 @@
+[
+{"id":1,"buildingId":81,"boilerId":44,"start_timestamp":"1606581884000","end_timestamp":"1572351089000"},
+{"id":2,"buildingId":72,"boilerId":66,"start_timestamp":"1559134738000","end_timestamp":"1604159311000"},
+{"id":3,"buildingId":4,"boilerId":58,"start_timestamp":"1597535149000","end_timestamp":"1573377322000"},
+{"id":4,"buildingId":36,"boilerId":56,"start_timestamp":"1593391363000","end_timestamp":"1580336498000"},
+{"id":5,"buildingId":87,"boilerId":55,"start_timestamp":"1553185740000","end_timestamp":"1572912399000"},
+{"id":6,"buildingId":61,"boilerId":48,"start_timestamp":"1555802134000","end_timestamp":"1579650206000"},
+{"id":7,"buildingId":57,"boilerId":10,"start_timestamp":"1572062057000","end_timestamp":"1604157529000"},
+{"id":8,"buildingId":86,"boilerId":40,"start_timestamp":"1567888326000","end_timestamp":"1580815350000"},
+{"id":9,"buildingId":2,"boilerId":7,"start_timestamp":"1586216560000","end_timestamp":"1594237154000"},
+{"id":10,"buildingId":27,"boilerId":90,"start_timestamp":"1570961986000","end_timestamp":"1566341234000"}
+]
