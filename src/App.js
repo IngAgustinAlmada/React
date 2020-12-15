@@ -8,27 +8,31 @@ import './App.css';
 
 class App extends Component {
   state = {
-    appointments:[],
+    appointmentValues:[],
     appointmentEdit: null,
   }
 
   componentDidMount(){
     const dataAppointments = require('./data/appointment.json')
     this.setState(
-      { appointments: dataAppointments });
+      { appointmentValues: dataAppointments });
   }
 
-  //Edit Appointment
   editAppointment = (appointmentX) => {
     this.setState({
       appointmentEdit: appointmentX,
     });
   };
 
-  // Edit an Appointment
+  cancelAppointment = (appointmentX) => {
+    this.setState({
+      addAppointment: appointmentX,
+    });
+  };
+
   updateAppointment = (id,buildingId,boilerId,start_timestamp,end_timestamp) => {
     this.setState({
-      appointments: this.state.appointments.map((appointment) => {
+      appointmentValues: this.state.appointmentValues.map((appointment) => {
         if (appointment.id === id) {
           appointment.buildingId = buildingId;
           appointment.boilerId = boilerId;
@@ -40,13 +44,12 @@ class App extends Component {
     });
   };
 
-  //Delete Appointment
   delAppointment = (id) => {
     this.setState({
-    appointments: [...this.state.appointments.filter((appointment) => appointment.id !== id)] });
+    appointmentValues: [...this.state.appointmentValues.filter((appointment) => appointment.id !== id)] });
+    console.log("Delete Working");
   }
 
-  //Add Appointment
   addAppointment = (buildingId,boilerId,start_timestamp,end_timestamp) => {
     const newAppointment = {
       id: uuidv4(),
@@ -55,7 +58,7 @@ class App extends Component {
       start_timestamp,
       end_timestamp
     };
-    this.setState({appointments: [...this.state.appointments, newAppointment] });
+    this.setState({appointmentValues: [...this.state.appointmentValues, newAppointment] });
   }
 
   render() {
@@ -69,9 +72,10 @@ class App extends Component {
                 updateAppointment={this.updateAppointment}
                 appointmentEdit={this.state.appointmentEdit}/>
                 <Appointment
-                appointments = {this.state.appointments}
+                appointmentValues = {this.state.appointmentValues}
+                cancelAppointment={this.cancelAppointment}
                 delAppointment={this.delAppointment}
-                editAppointment={this.state.editAppointment}/>
+                editAppointment={this.editAppointment}/>
               </React.Fragment>
           </div>
         </div>

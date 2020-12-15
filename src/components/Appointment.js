@@ -5,23 +5,23 @@ import PropTypes from "prop-types";
 class Appointment extends Component {
   render() {
     return (
-      <>
+      <div className="ContainerData">
         <h1>Appointments</h1>
-        {this.props.appointments.map((appointment) => (
+        {this.props.appointmentValues.map((appointment) => (
           <AppointmentItem
           key={appointment.id}
           appointment={appointment}
           editAppointment={this.props.editAppointment}
           delAppointment={this.props.delAppointment} />
-          ))};
-      </>
+          ))}
+      </div>
     )
   }
 }
 
 //PropTypes
 Appointment.propTypes = {
-    appointments:PropTypes.array.isRequired,
+    appointmentValues:PropTypes.array.isRequired,
     delAppointment:PropTypes.func.isRequired,
 }
 

@@ -7,7 +7,7 @@ export class AddAppointment extends Component {
         buildingId:"",
         boilerId:"",
         start_timestamp:"",
-        end_timestamp:""
+        end_timestamp:"",
     }
 
     componentDidUpdate(prevProps) {
@@ -46,9 +46,9 @@ export class AddAppointment extends Component {
         this.setState({
             id: "",
             buildingId: "",
-            boilerId: "",
-            start_timestamp: "",
-            end_timestamp: "",
+            boilerId:"",
+            start_timestamp:"",
+            end_timestamp:"",
           });
     }
 
@@ -79,6 +79,7 @@ export class AddAppointment extends Component {
                             type="date"
                             name="start_timestamp"
                             style={inputStyle}
+                            required pattern="\d{4}-\d{2}-\d{2}"
                             value={this.state.start_timestamp}
                             onChange={this.onChange}
                         />
@@ -89,11 +90,28 @@ export class AddAppointment extends Component {
                             value={this.state.end_timestamp}
                             onChange={this.onChange}
                         />
+                        <div>
+                        {this.state.id ?
                         <input
                             type="submit"
-                            value="Send"
-                            style={inputStyle}
+                            value="Save"
+                            style={inputButton}
                         />
+                        :
+                        <input
+                        type="submit"
+                        value="Add"
+                        style={inputButton}
+                    />}
+                    {this.state.id ?
+                        <input
+                        type="submit"
+                        value="Cancel"
+                        style={inputButton}
+                    />
+                        :
+                        ""}
+                    </div>
                 </form>
             </div >
         )
@@ -113,6 +131,13 @@ const inputStyle = {
     margin: "5px",
     borderRadius: "5px",
   };
+
+const inputButton = {
+padding: "10px",
+width: "10%",
+margin: "5px",
+borderRadius: "5px",
+};
 
 export default AddAppointment;
 
