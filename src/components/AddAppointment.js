@@ -3,78 +3,108 @@ import PropTypes from "prop-types"
 
 export class AddAppointment extends Component {
     state = {
+        id:"",
         buildingId:"",
         boilerId:"",
         start_timestamp:"",
-        end_timestamp:"",
+        end_timestamp:""
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.appointmentEdit !== prevProps.appointmentEdit) {
+          this.handleEdit(this.props.appointmentEdit);
+        }
+      }
+      handleEdit = (appointmentEdit) => {
+        this.setState({
+          id: appointmentEdit.id,
+          buildingId: appointmentEdit.buildingId,
+          boilerId: appointmentEdit.boilerId,
+          start_timestamp: appointmentEdit.start_timestamp,
+          end_timestamp: appointmentEdit.end_timestamp,
+        });
+      };
+
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.addAppointment(
-            this.state.buildingId,
-            this.state.boilerId,
-            this.state.start_timestamp,
-            this.state.end_timestamp,
-        );
+        if (this.state.id) {
+            this.props.updateAppointment(
+                this.state.id,
+                this.state.buildingId,
+                this.state.boilerId,
+                this.state.start_timestamp,
+                this.state.end_timestamp,
+            );
+        } else {
+            this.props.addAppointment(
+                this.state.buildingId,
+                this.state.boilerId,
+                this.state.start_timestamp,
+                this.state.end_timestamp,
+            );
+        }
         this.setState({
-            buildingId:"",
-            boilerId:"",
-            start_timestamp:"",
-            end_timestamp:""
-        })
+            id: "",
+            buildingId: "",
+            boilerId: "",
+            start_timestamp: "",
+            end_timestamp: "",
+          });
     }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value});
     render() {
         return (
-            <>
-                <h3>Add new appointment</h3>
-
+            <div className="Container">
+                <h3>{this.state.id ? "Edit appointment" : "Add new appointment"}</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input
-                        type="text"
-                        name="buildingId"
-                        style={inputStyle}
-                        placeholder="Building Id..."
-                        value={this.state.buildingId}
-                        onChange={this.onChange}
-                    />
-                    <input
-                        type="text"
-                        name="boilerId"
-                        style={inputStyle}
-                        placeholder="Boiler Id..."
-                        value={this.state.boilerId}
-                        onChange={this.onChange}
-                    />
-                    <input
-                        type="date"
-                        name="start_timestamp"
-                        style={inputStyle}
-                        value={this.state.start_timestamp}
-                        onChange={this.onChange}
-                    />
-                    <input
-                        type="date"
-                        name="end_timestamp"
-                        style={inputStyle}
-                        value={this.state.end_timestamp}
-                        onChange={this.onChange}
-                    />
-                    <input
-                        type="submit"
-                        value="Submit"
-                        style={inputStyle}
-                    />
+                    <input type="hidden" name="id" value={this.state.id} />
+                        <input
+                            type="text"
+                            name="buildingId"
+                            style={inputStyle}
+                            placeholder="Building Id..."
+                            value={this.state.buildingId}
+                            onChange={this.onChange}
+                        />
+                        <input
+                            type="text"
+                            name="boilerId"
+                            style={inputStyle}
+                            placeholder="Boiler Id..."
+                            value={this.state.boilerId}
+                            onChange={this.onChange}
+                        />
+                        <input
+                            type="date"
+                            name="start_timestamp"
+                            style={inputStyle}
+                            value={this.state.start_timestamp}
+                            onChange={this.onChange}
+                        />
+                        <input
+                            type="date"
+                            name="end_timestamp"
+                            style={inputStyle}
+                            value={this.state.end_timestamp}
+                            onChange={this.onChange}
+                        />
+                        <input
+                            type="submit"
+                            value="Send"
+                            style={inputStyle}
+                        />
                 </form>
-            </>
+            </div >
         )
     }
 }
 
 //PropTypes
 AddAppointment.propTypes = {
-    addAppointment:PropTypes.object.isRequired,
+    addAppointment:PropTypes.func.isRequired,
+    appointmentEdit: PropTypes.object,
+    updateAppointment: PropTypes.func.isRequired,
 }
 
 const inputStyle = {
@@ -84,6 +114,6 @@ const inputStyle = {
     borderRadius: "5px",
   };
 
-export default AddAppointment
+export default AddAppointment;
 
 

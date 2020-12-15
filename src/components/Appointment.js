@@ -4,10 +4,18 @@ import PropTypes from "prop-types";
 
 class Appointment extends Component {
   render() {
-    return this.props.appointments.map((appointment) => (
-    <AppointmentItem key={appointment.id} appointment={appointment} markComplete=
-    {this.props.markComplete} delAppointment={this.props.delAppointment} />
-    ));
+    return (
+      <>
+        <h1>Appointments</h1>
+        {this.props.appointments.map((appointment) => (
+          <AppointmentItem
+          key={appointment.id}
+          appointment={appointment}
+          editAppointment={this.props.editAppointment}
+          delAppointment={this.props.delAppointment} />
+          ))};
+      </>
+    )
   }
 }
 

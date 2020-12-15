@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 10px;
 }
 
 body {
@@ -9,12 +9,22 @@ body {
   line-height: 1.4;
 }
 
-a {
-  color: #333;
-  text-decoration: none;
+.Container {
+  background-color: #282c34;
+  text-align: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
-.container {
-  padding: 0 1rem;
+
+.ContainerData {
+  background-color: #26375a;
+  text-align: center;
+  justify-content: center;
+  font-size: calc(5px + 2vmin);
+  color: white;
+  padding-right: 15%;
+  padding-left: 15%;
 }
 
 .btn {
